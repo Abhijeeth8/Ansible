@@ -1,0 +1,24 @@
+all:
+  hosts:
+    webclient01:
+      ansible_host: 172.31.0.130
+    webclient02:
+      ansible_host: 172.31.3.116
+    dbclient01:
+      ansible_host: 172.31.13.248
+
+  children:
+    webservers:
+      hosts:
+        webclient01:
+        webclient02:
+    dbservers:
+      hosts:
+        dbclient01:
+    grpofgrps:
+      children:
+        webservers:
+        dbservers:
+      vars:
+        ansible_user: ec2-user
+        ansible_ssh_private_key_file: ansible_clientkey.pem
